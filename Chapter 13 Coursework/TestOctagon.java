@@ -56,7 +56,6 @@ class Octagon extends GeometricObject implements Comparable<Octagon>, Cloneable 
 
     @Override
     public double getArea() {
-        // Formula: (2 + (4 / sqrt(2))) * side * side
         return (2 + (4 / Math.sqrt(2))) * side * side;
     }
 
