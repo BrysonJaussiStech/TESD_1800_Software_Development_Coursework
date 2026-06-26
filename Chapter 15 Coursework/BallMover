@@ -1,0 +1,86 @@
+import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+public class BallMover extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        BallPane ballPane = new BallPane();
+
+        Button btnLeft = new Button("Left");
+        Button btnRight = new Button("Right");
+        Button btnUp = new Button("Up");
+        Button btnDown = new Button("Down");
+
+        btnLeft.setOnAction(e -> ballPane.moveLeft());
+        btnRight.setOnAction(e -> ballPane.moveRight());
+        btnUp.setOnAction(e -> ballPane.moveUp());
+        btnDown.setOnAction(e -> ballPane.moveDown());
+
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setStyle("-fx-padding: 10px;");
+        hBox.getChildren().addAll(btnLeft, btnRight, btnUp, btnDown);
+
+        BorderPane root = new BorderPane();
+        root.setCenter(ballPane);
+        root.setBottom(hBox);
+
+        Scene scene = new Scene(root, 300, 250);
+        primaryStage.setTitle("BallMover");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    class BallPane extends Pane {
+        private final Circle circle = new Circle(20); 
+        private final double step = 10;
+
+        public BallPane() {
+            circle.setFill(Color.WHITE);
+            circle.setStroke(Color.BLACK);
+            circle.setStrokeWidth(1.5);
+            
+            circle.setCenterX(50);
+            circle.setCenterY(50);
+            
+            getChildren().add(circle);
+        }
+
+        public void moveLeft() {
+            if (circle.getCenterX() - step >= circle.getRadius()) {
+                circle.setCenterX(circle.getCenterX() - step);
+            }
+        }
+
+        public void moveRight() {
+            if (circle.getCenterX() + step <= getWidth() - circle.getRadius()) {
+                circle.setCenterX(circle.getCenterX() + step);
+            }
+        }
+
+        public void moveUp() {
+            if (circle.getCenterY() - step >= circle.getRadius()) {
+                circle.setCenterY(circle.getCenterY() - step);
+            }
+        }
+
+        public void moveDown() {
+            if (circle.getCenterY() + step <= getHeight() - circle.getRadius()) {
+                circle.setCenterY(circle.getCenterY() + step);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
